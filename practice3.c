@@ -73,13 +73,78 @@ void SearchBinary(int num)
 	putchar('\n');
 	int decimal = 0;
     int base = 1; // 2^0
-    for (int i = 0; i < index; i++) {
+    for (int i = index - 1; i >= 0; i--) {
         if (result[i] == '1') {
             decimal += base;
         }
         base *= 2; // Move to the next base (2^1, 2^2, ...)
     }
-    printf("New value: %d\n", decimal);
+    printf("New number: %d\n", decimal);
+    // Array to store digits
+    int digits0[64];
+    int count0 = 0;
+    int num2 = decimal;
+    int num3 = decimal;
+    // Decompose number into digits
+    do {
+        digits0[count0] = num2 % 10; // Get last digit
+        num2 /= 10;                 // Remove last digit
+        count0++;
+    } while (num2 > 0);
+
+    // Print digits in reverse order
+    printf("New digits: ");
+    for (int i = count0 - 1; i >= 0; i--) {
+        printf("%d ", digits0[i]);
+    }
+    printf("\n");
+	int result0[64];
+	int index0 = 0;
+
+	while (num3 > 0)
+	{
+		int remainder = num3 % 2;
+		result0[index0++] = symbols[remainder];
+		num3 /= 2;
+	}
+	
+	printf("New Result:");
+	for (int i = index0 - 1; i >= 0; i--)
+	{
+		putchar(result0[i]);
+	}
+	
+	putchar('\n');
+	int summa0 = 0;
+	for (int i = count0 - 1; i >= 0; i--) {
+	    int val0 = digits0[i];
+	    summa0 += val0;
+	}
+	printf("summa0 = %d, index0 = %d", summa0, index0);
+	putchar('\n');
+	if (summa0 % 2 == 0) {
+	    result0[index0++] = '0';
+	}
+	else {
+	    result0[index0++] = '1';
+	}
+	printf("summa0 = %d, index0 = %d", summa0, index0);
+	putchar('\n');
+	printf("New second result:");
+	for (int i = 0; i < index0; i++)
+	{
+		putchar(result0[i]);
+	}
+	putchar('\n');
+	int decimal0 = 0;
+    int base0 = 1; // 2^0
+    for (int i = index0 - 1; i >= 0; i--) {
+        if (result0[i] == '1') {
+            decimal0 += base0;
+        }
+        base0 *= 2; // Move to the next base (2^1, 2^2, ...)
+    }
+    printf("New second number: %d\n", decimal0);
 }
 
 int main()
