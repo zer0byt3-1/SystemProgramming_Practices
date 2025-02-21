@@ -1,38 +1,53 @@
-// This is a personal academic project. Dear PVS-Studio, please check it.
+/******************************************************************************
 
-// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+                            Online C Compiler.
+                Code, Compile, Run and Debug C program online.
+Write your code in this editor and press "Run" button to compile and execute it.
 
+*******************************************************************************/
 #include <stdio.h>
 #include <stdint.h>
-#include <locale>
+#include <locale.h>
 
 void ConvertDecimalToSomeSystem(int iInputVal, int iSystem) {
-	if ((iInputVal >= -1 && iInputVal <= 1)) {
-		printf_s("Зачем?\n");
+	if (iInputVal <= 0) {
+		printf("Inputed value less or equal zero\n");
+		return;
+	}
+	
+	if (iSystem == 10){
+	    printf("Result: %i", iInputVal);
+	    return;
+	}
+	
+	if (!(iSystem >= 2 && iSystem <= 36)) {
+		printf("Inputed system not in range, valid range: 2-36\n");
 		return;
 	}
 
-	char symbols[] = "0123456789";
-	char result[128]{};
+	char symbols[] = "0123456789ABCDEF";
+	char result[128];
 	int iPos = 0;
 	while (iInputVal > 0) {
 		int iMod = iInputVal % iSystem;
-		result[++iPos] = symbols[iMod];
+		result[iPos++] = symbols[iMod];
 		iInputVal /= iSystem;
 	}
-	result[iPos] = '\0';
-
-	printf_s("%s", result);
+	
+	printf("Result: ");
+	for (int i = iPos - 1; i >= 0; i--){
+	    putchar(result[i]);
+	}
 	return;
 }
 
-int __cdecl main(int argc, char** argv) {
-	setlocale(LC_ALL, "ru");
-	int iInput{}, iSystem{};
-	printf_s("Введите число: ");
-	scanf_s("%i", &iInput);
-	printf_s("В какую систему надо перевести число: ");
-	scanf_s("%i", &iSystem);
+int main() {
+	int iInput = 0;
+	int iSystem = 0;
+	printf("Enter value: ");
+	scanf("%i", &iInput);
+	printf("Into which system should the number be converted: ");
+	scanf("%i", &iSystem);
 	ConvertDecimalToSomeSystem(iInput, iSystem);
 	return 0;
 }
