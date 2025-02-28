@@ -1,10 +1,3 @@
-/******************************************************************************
-
-                            Online C Compiler.
-                Code, Compile, Run and Debug C program online.
-Write your code in this editor and press "Run" button to compile and execute it.
-
-*******************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 void printBinary(unsigned int num, int bits) {
@@ -12,23 +5,6 @@ void printBinary(unsigned int num, int bits) {
 		printf("%d", (num >> i) & 1);
 	}
 	printf("\n");
-}
-
-void printBitGrid(unsigned int num, int rows, int cols) {
-    printf("Bit grid representation:\n");
-    int maxBits = rows * cols;
-    
-    for (int i = 0; i < rows; i++) {
-        for (int j = cols - 1; j >= 0; j--) {
-            int bitIndex = (i * cols) + j;
-            if (bitIndex < maxBits) {
-                printf("%d ", (num >> (maxBits - 1 - bitIndex)) & 1);
-            } else {
-                printf("  ");
-            }
-        }
-        printf("\n");
-    }
 }
 
 int canStoreNumber(int num, int bytes, int signedFlag) {
@@ -41,6 +17,16 @@ int canStoreNumber(int num, int bytes, int signedFlag) {
 	else {
 		return (num >= minSize && num <= maxSize);
 	}
+}
+
+void GenerateHammingCode(unsigned int num, int bits) {
+    int pos = 0;
+    char binaryStr[64];
+	for (int i = bits - 1; i >= 0; i--) {
+		int val = (num >> i) & 1;
+		binaryStr[pos++] = val + '0';
+	}
+	printf("\n");
 }
 
 int main()
@@ -61,16 +47,17 @@ int main()
 		int bits = bytes * 8;
 		if (signedFlag) {
 			printf("Binary code of the number %d (signed): ", num);
-			printBinary((unsigned int)(num & ((1 << bits) - 1)), bits);
+			GenerateHammingCode((unsigned int)(num & ((1 << bits) - 1)), bits);
 		}
 		else {
 			printf("Binary code of number %d (unsigned): ", num);
-			printBinary((unsigned int)num, bits);
+			GenerateHammingCode((unsigned int)num, bits);
 		}
 	}
 	else {
 		printf("The number %d cannot be put into %d bytes in %s format.\n",
 			num, bytes, (signedFlag ? "signed" : "unsigned"));
+			return 1;
 	}
 	return 0;
 }
